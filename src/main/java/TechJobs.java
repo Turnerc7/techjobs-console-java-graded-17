@@ -10,14 +10,14 @@ public class TechJobs {
 
     static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
-        columnChoices.put("core competency", "Skill");
+        columnChoices.put("position type", "Position Type");
         columnChoices.put("employer", "Employer");
         columnChoices.put("location", "Location");
-        columnChoices.put("position type", "Position Type");
+        columnChoices.put("core competency", "Skill");
         columnChoices.put("all", "All");
 
         // Top-level menu options
@@ -59,9 +59,11 @@ public class TechJobs {
 
                 // What is their search term?
                 System.out.println("\nSearch term:");
+                System.out.println();
                 String searchTerm = in.nextLine();
-
+                ;
                 if (searchField.equals("all")) {
+
                     printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
@@ -112,14 +114,55 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
-    private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+    public static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+           if (someJobs == null || someJobs.isEmpty()) {
+                      System.out.print("No Results");
+        } else {
+            for (int i = 0; i < someJobs.size(); i++) {
+                HashMap<String, String> job = someJobs.get(i);
+                      System.out.println("*****");
+                  for (Map.Entry<String, String> field : job.entrySet()) {
+                      System.out.println(field.getKey() + ": " + field.getValue());
+                }
+                      System.out.print("*****");
+                  if (i < someJobs.size() - 1) {
+                      System.out.println("\n");
+                  } else {
+                      System.out.println();
 
-        System.out.println("printJobs is not implemented yet");
+                }
+            }
+           // System.out.println();
+        }
     }
 }
+
+
+//    if (someJobs == null || someJobs.isEmpty()) {
+//        System.out.println("No Results");
+//        return;
+//    }
+//
+//            for (HashMap<String, String> job : someJobs) {
+//                System.out.println("*****");
+//                System.out.println("position type: " + job.getOrDefault("position type", "Data not available"));
+//                System.out.println("name: " + job.getOrDefault("name", "Data not available"));
+//                System.out.println("employer: " + job.getOrDefault("employer", "Data not available"));
+//                System.out.println("location: " + job.getOrDefault("location", "Data not available"));
+//                System.out.println("core competency: " + job.getOrDefault("core competency", "Data not available"));
+//                System.out.println("*****\n");
+//
+//
+//            }
+//        }
+//    }
+//}
+
+
+
